@@ -5,9 +5,24 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Hub.unity
+    guid: 4c2c45d4939f67b4b975b721ed9d7912
+  - enabled: 1
+    path: Assets/Scenes/Sandbox.unity
+    guid: 8eac4b6809fd74d45a0eba6e6aebe4da
+  - enabled: 1
+    path: Assets/Scenes/Results.unity
+    guid: b762ad9e1630c8d4cb33dadbe6bafdc2
+  - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: 1733fb6dfc9fd6b47a4c630c72af1daf
+  - enabled: 1
+    path: Assets/Scenes/World.unity
+    guid: e0140481ad6fb97428a06fa581088646
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 39efab4263e015948935fcadca0e971e, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

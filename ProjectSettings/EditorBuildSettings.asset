@@ -23,6 +23,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/World.unity
     guid: e0140481ad6fb97428a06fa581088646
+  - enabled: 1
+    path: Assets/Scenes/CombatWorld.unity
+    guid: 25a8b6ab6817b3045bfac8202a4624ae
+  - enabled: 1
+    path: Assets/Scenes/RomanceWorld.unity
+    guid: 9ada7fa44b07fe94984791fb61e765e7
+  - enabled: 1
+    path: Assets/Scenes/MysteryWorld.unity
+    guid: 882128838a5f21a4e9f5b60760520d8f
+  - enabled: 1
+    path: Assets/Scenes/UltraRareWorld.unity
+    guid: 068ef8383bbb50c4d853e33d363c082c
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 39efab4263e015948935fcadca0e971e, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

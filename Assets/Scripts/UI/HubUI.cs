@@ -8,14 +8,17 @@ public class HubUI : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         regularPullButton.onClick.AddListener(() =>
         {
             if (GameManager.Instance.regularTickets <= 0) return;
 
             GameManager.Instance.regularTickets--;
-            GameManager.Instance.currentWorldId = "WorldB_Romance";
+            GameManager.Instance.currentWorld = WorldType.RomanceCombat;
             GameManager.Instance.currentWorldRarity = WorldRarity.Common;
-            GameManager.Instance.GoToWorld();
+            GameManager.Instance.GoToCurrentWorld();
         });
 
         specialPullButton.onClick.AddListener(() =>
@@ -23,9 +26,9 @@ public class HubUI : MonoBehaviour
             if (GameManager.Instance.specialTickets <= 0) return;
 
             GameManager.Instance.specialTickets--;
-            GameManager.Instance.currentWorldId = "WorldD_Mythic";
-            GameManager.Instance.currentWorldRarity = WorldRarity.Mythic;
-            GameManager.Instance.GoToWorld();
+            GameManager.Instance.currentWorld = WorldType.RomanceCombat;
+            GameManager.Instance.currentWorldRarity = WorldRarity.SSR;
+            GameManager.Instance.GoToCurrentWorld();
         });
     }
 }

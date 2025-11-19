@@ -1447,7 +1447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2db57a9dd08cb34fab20a023ffae218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalInteractable
-  promptText: Enter
+  promptText: Leave World
 --- !u!1001 &8451588597198600264
 PrefabInstance:
   m_ObjectHideFlags: 0

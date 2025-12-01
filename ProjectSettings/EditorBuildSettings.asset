@@ -35,6 +35,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UltraRareWorld.unity
     guid: 068ef8383bbb50c4d853e33d363c082c
+  - enabled: 1
+    path: Assets/Scenes/CharacterSelect.unity
+    guid: bde5cc17d059a424e85314e4f70e1ece
+  - enabled: 1
+    path: Assets/Scenes/CombatSelect.unity
+    guid: fd5a84377aa651241b2be5528f18b19c
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 39efab4263e015948935fcadca0e971e, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

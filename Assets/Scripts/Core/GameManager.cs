@@ -4,9 +4,12 @@ using UnityEngine.SceneManagement;
 public enum WorldType { None, RomanceCombat, Mystery, Combat, UltraRareHybrid }
 public enum WorldRarity { Common, Uncommon, Rare, SR, SSR }
 
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public CharacterGender SelectedGender { get; private set; } = CharacterGender.None;
+    public CombatStyle SelectedCombatStyle { get; private set; } = CombatStyle.None;
 
     [Header("Tickets")]
     public int regularTickets = 1;
@@ -110,4 +113,27 @@ public class GameManager : MonoBehaviour
             specialTickets += 1;
         }
     }
+
+    public void ReturnToHub()
+    {
+        // Unlock and show cursor for the 2D hub
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        SceneManager.LoadScene("Hub");
+    }
+
+    public void SetGender(CharacterGender gender)
+    {
+        SelectedGender = gender;
+        Debug.Log("[GameManager] Gender set to: " + gender);
+    }
+
+    public void SetCombatStyle(CombatStyle style)
+    {
+        SelectedCombatStyle = style;
+        Debug.Log("[GameManager] Combat style set to: " + style);
+    }
+
+
 }

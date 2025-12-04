@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6c116faef0547918ccbc20b6ec864d, type: 3}
+  m_Name: Scenario_CEO
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryScenario
+  villainName: CEO
+  villainModelPrefab: {fileID: 6404810820318311154, guid: 1c29b145ed1254673a99a1423cc81b59, type: 3}
+  flavorPropPrefab: {fileID: 5307199541145807084, guid: c8d1379b2ded34d04ae9715aad14ac58, type: 3}
+  flavorPropData: {fileID: 11400000, guid: ce5f60ff3a1cb4ad4b66f62fd8a99da9, type: 2}
+  hiddenItemName: Logistics Invoice #8944
+  hiddenItemText: 'Header: Operation: Samaritan - Asset Swap
+
+    Outbound: 50 Autonomous
+    Drones (Class: Peacekeeping)
+
+    Inbound: 200 Units - Biological Substrates
+    (Live/Unprocessed)
+
+    Destination: Aegis Site Omega
+
+    CFO Note: "Biologicals?
+    The weight logs match adult males. These aren''t samples. What are we shipping?"'
+  animationTriggerName: TouchFlower

@@ -30,6 +30,8 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Physics.Raycast(cam.position, cam.forward, out RaycastHit hit, interactDistance))
         {
+            Debug.Log("Hit: " + hit.collider.name);
+            
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
 
             if (interactable != null)

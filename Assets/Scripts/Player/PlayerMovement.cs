@@ -25,10 +25,10 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         Debug.Log("Current Time Scale: " + Time.timeScale); 
-        Time.timeScale = 1f; // Force the game to run at normal speed
+        //Time.timeScale = 1f; // Force the game to run at normal speed
     }
 
     private void StartCrouch()

@@ -1441,7 +1441,7 @@ RectTransform:
   m_GameObject: {fileID: 1698028733}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 315892218}
@@ -1471,7 +1471,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b49e8b4124a23bf4694f3f86fc074867, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b06ac46d71b0b484eb30b2986dbb6583, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1522,12 +1522,12 @@ MonoBehaviour:
   meleeButton: {fileID: 318499554}
   magicButton: {fileID: 1287185684}
   goButton: {fileID: 802721549}
-  maleNeutralSprite: {fileID: 21300000, guid: b49e8b4124a23bf4694f3f86fc074867, type: 3}
-  maleMeleeSprite: {fileID: 21300000, guid: a1796236fa011b541b9aef4d515cda06, type: 3}
-  maleMagicSprite: {fileID: 21300000, guid: fa2bea01c49e5ff48ad8d8ed8142f4a7, type: 3}
-  femaleNeutralSprite: {fileID: 21300000, guid: b49e8b4124a23bf4694f3f86fc074867, type: 3}
-  femaleMeleeSprite: {fileID: 21300000, guid: a1796236fa011b541b9aef4d515cda06, type: 3}
-  femaleMagicSprite: {fileID: 21300000, guid: fa2bea01c49e5ff48ad8d8ed8142f4a7, type: 3}
+  maleNeutralSprite: {fileID: 21300000, guid: b06ac46d71b0b484eb30b2986dbb6583, type: 3}
+  maleMeleeSprite: {fileID: 21300000, guid: 3032fe39262e1184bb1421600a5bde08, type: 3}
+  maleMagicSprite: {fileID: 21300000, guid: 7dae24cda0f694345a722447a68248ff, type: 3}
+  femaleNeutralSprite: {fileID: 21300000, guid: 03cb71c89c356ce41bfa1256b892b672, type: 3}
+  femaleMeleeSprite: {fileID: 21300000, guid: c12c414519e34cd4ca6b576355bf7285, type: 3}
+  femaleMagicSprite: {fileID: 21300000, guid: a1da5f79ac1bf2545b2e5d62992cb9c8, type: 3}
 --- !u!4 &1860902862
 Transform:
   m_ObjectHideFlags: 0

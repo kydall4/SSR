@@ -16,3 +16,19 @@ MonoBehaviour:
   description: Found under the desk with an ink splatter. He collapsed suddenly.
   isPhysicsLayer: 0
   cluePrefab: {fileID: 5594402542975117573, guid: cad10dda6abfc47478a6a2a12d6d083f, type: 3}
+  arguments:
+  - optionText: This is a $500 fountain pen. He wouldn't just kick it under the desk
+      and leave it there.
+    chiefResponse: He was about to end his life. I doubt he was worried about the
+      resale value of his stationery.
+    isCorrectLogic: 0
+  - optionText: It didn't just fall. Look at the ink splatter on the chair leg. It
+      hit hard and rolled while uncapped. He didn't drop it; he collapsed mid-sentence.
+    chiefResponse: Collapsed? ...Wait. If he fell unconscious in his chair... then
+      how did he open the window?
+    isCorrectLogic: 1
+  - optionText: It's under the desk. He must have been crawling around looking for
+      it and hit his head.
+    chiefResponse: And then he stood up and jumped out the window in frustration?
+      That's your theory? Please.
+    isCorrectLogic: 0

@@ -21,6 +21,11 @@ public class MysteryUIManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public GameObject continueIcon; // <--- NEW: The "More Text" Triangle
 
+    [Header("Argument UI")]
+    public GameObject choicePanel;       // The new panel for 3 buttons
+    public TextMeshProUGUI[] choiceTexts; // CHANGED: We only need the text objects now, not buttons
+    private EvidenceClue currentActiveClue; // Track which clue we are arguing about
+
     [Header("Animation")]
     public Vector2 hiddenPos = new Vector2(0, -500);
     public Vector2 showPos = new Vector2(0, 0);
@@ -31,7 +36,7 @@ public class MysteryUIManager : MonoBehaviour
     private Queue<string> dialogueQueue = new Queue<string>();
 
     // Helper to check if any UI is blocking the player
-    private bool isUIOpen => isNotebookOpen || dialoguePanel.activeSelf;
+    public bool isUIOpen => isNotebookOpen || dialoguePanel.activeSelf || (choicePanel != null && choicePanel.activeSelf);
 
     void Awake()
     {
@@ -41,6 +46,7 @@ public class MysteryUIManager : MonoBehaviour
         // Force Dialogue Box OFF initially (Critical Fix)
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
         if (continueIcon != null) continueIcon.SetActive(false);
+        if (choicePanel != null) choicePanel.SetActive(false);
         
         // Show Tutorial immediately
         if (tutorialPanel != null) 
@@ -59,22 +65,135 @@ public class MysteryUIManager : MonoBehaviour
 
     void Update()
     {
-        // 1. Notebook Toggle
+        // 1. Argument Choice Input (Keys 1-3) -- HIGHEST PRIORITY
+        if (choicePanel != null && choicePanel.activeSelf)
+        {
+            CheckArgumentInput();
+            return; // Block other inputs while choosing
+        }
+
+        // 2. Notebook Toggle
         if (Input.GetKeyDown(KeyCode.Tab)) ToggleNotebook();
 
-        // 2. Advance Dialogue (Space)
+        // 3. Advance Dialogue (Space)
         if (dialoguePanel.activeSelf && Input.GetKeyDown(KeyCode.Space))
         {
             DisplayNextLine();
         }
         
-        // 3. Slide Animation
+        // 4. Evidence Selection (Number Keys 1-9) - ONLY when Notebook is OPEN
+        if (isNotebookOpen)
+        {
+            CheckEvidenceInput();
+        }
+        
+        // 5. Slide Animation
         if (notebookRect != null)
         {
             Vector2 targetPos = isNotebookOpen ? showPos : hiddenPos;
             notebookRect.anchoredPosition = Vector2.Lerp(notebookRect.anchoredPosition, targetPos, Time.deltaTime * slideSpeed);
         }
     }
+
+    // --- NEW INPUT SYSTEM ---
+    void CheckEvidenceInput()
+    {
+        if (MysteryWorldManager.Instance == null) return;
+        
+        // Check keys 1 through 9
+        for (int i = 0; i < 9; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i)) // Alpha1 is '1', Alpha2 is '2', etc.
+            {
+                int index = i;
+                if (index < MysteryWorldManager.Instance.collectedEvidence.Count)
+                {
+                    EvidenceClue clue = MysteryWorldManager.Instance.collectedEvidence[index];
+                    
+                    // Close notebook immediately
+                    ToggleNotebook();
+                    
+                    // Trigger the Presentation Logic
+                    MysteryWorldManager.Instance.PresentEvidence(clue);
+                }
+            }
+        }
+    }
+
+    // -- ARGUMENT CHOICE SYSTEM ---
+    void CheckArgumentInput()
+    {
+        // Check keys 1, 2, 3
+        for (int i = 0; i < 3; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                // Send choice to Manager
+                if (currentActiveClue != null)
+                {
+                    OnArgumentSelected(currentActiveClue, i);
+                }
+            }
+        }
+    }
+
+    public void ShowArgumentChoices(EvidenceClue clue)
+    {
+        currentActiveClue = clue;
+        choicePanel.SetActive(true);
+        dialoguePanel.SetActive(false); // Hide Chief while we think
+
+        // --- Hide the HUD button ---
+        if (openButton != null) openButton.gameObject.SetActive(false);
+
+        // Setup Text Only
+        for (int i = 0; i < choiceTexts.Length; i++)
+        {
+            if (i < clue.arguments.Length)
+            {
+                choiceTexts[i].gameObject.SetActive(true);
+                // Add number prefix so player knows what key to press
+                choiceTexts[i].text = $"[{i + 1}]  {clue.arguments[i].optionText}";
+            }
+            else
+            {
+                choiceTexts[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    void OnArgumentSelected(EvidenceClue clue, int index)
+    {
+        choicePanel.SetActive(false);
+        currentActiveClue = null;
+
+        // --- Restore the HUD button ---
+        if (openButton != null) openButton.gameObject.SetActive(true);
+        
+        // Send choice back to Logic
+        if (MysteryWorldManager.Instance != null)
+            MysteryWorldManager.Instance.ResolveArgument(clue, index);
+    }
+
+    void PresentEvidenceByIndex(int index)
+    {
+        if (MysteryWorldManager.Instance != null)
+        {
+            // Check if we actually have that much evidence
+            if (index < MysteryWorldManager.Instance.collectedEvidence.Count)
+            {
+                EvidenceClue clue = MysteryWorldManager.Instance.collectedEvidence[index];
+                
+                // Call the Presentation Logic
+                MysteryWorldManager.Instance.PresentEvidence(clue);
+                
+                // Close the notebook to show the drama
+                ToggleNotebook(); 
+            }
+        }
+    }
+
+    // --- DIALOGUE SYSTEM ---
 
     // Wrapper for single lines (keeps your existing code working)
     public void ShowDialogue(string text)
@@ -130,7 +249,7 @@ public class MysteryUIManager : MonoBehaviour
         if (isNotebookOpen)
         {
             RefreshContent(); 
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
         }
         else
@@ -151,7 +270,9 @@ public class MysteryUIManager : MonoBehaviour
         // Spawn new buttons from the Manager's list
         if (MysteryWorldManager.Instance != null)
         {
-            foreach (var clue in MysteryWorldManager.Instance.collectedEvidence)
+            List<EvidenceClue> evidence = MysteryWorldManager.Instance.collectedEvidence;
+            
+            for (int i = 0; i < evidence.Count; i++)
             {
                 if (evidenceButtonPrefab != null)
                 {
@@ -164,11 +285,15 @@ public class MysteryUIManager : MonoBehaviour
                     
                     // Set Text
                     TextMeshProUGUI txt = btnObj.GetComponentInChildren<TextMeshProUGUI>();
-                    if (txt != null) txt.text = clue.clueName;
+                    
+                    // NEW VISUALS: Show "1. Clue Name"
+                    if (txt != null) {
+                        txt.text = $"[{i + 1}] {evidence[i].clueName}";
+                    }
 
                     // Set Click Logic
                     Button btn = btnObj.GetComponent<Button>();
-                    if (btn != null) btn.onClick.AddListener(() => OnEvidenceClicked(clue));
+                    if (btn != null) btn.interactable = false; // Optional: make it look static
                 }
             }
         }

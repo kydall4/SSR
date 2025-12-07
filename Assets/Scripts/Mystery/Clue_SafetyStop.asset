@@ -17,3 +17,20 @@ MonoBehaviour:
     use a screwdriver.
   isPhysicsLayer: 1
   cluePrefab: {fileID: 5594402542975117573, guid: cad10dda6abfc47478a6a2a12d6d083f, type: 3}
+  arguments:
+  - optionText: He was desperate to get air. He must have ripped it off with his
+      bare hands in a panic.
+    chiefResponse: With his bare hands? That stop is solid steel held by 3-inch screws.
+      He would have broken his fingers, not the metal.
+    isCorrectLogic: 0
+  - optionText: Look at the screws. They aren't stripped or bent. Someone used a
+      screwdriver to remove this cleanly. A suicidal man in distress doesn't stop
+      to perform home maintenance.
+    chiefResponse: A screwdriver? ...You're saying someone intentionally widened
+      the opening to fit a body through? That implies premeditation.
+    isCorrectLogic: 1
+  - optionText: The building is old. It probably just fell off when he leaned against
+      the glass, and he tumbled out.
+    chiefResponse: Fell off? The screws are sitting in a neat pile right next to
+      it. That wasn't an accident; it was disassembled.
+    isCorrectLogic: 0

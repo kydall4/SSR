@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections; // Required for Coroutines
 
 public class MysteryWorldManager : MonoBehaviour
 {
@@ -97,68 +98,92 @@ public class MysteryWorldManager : MonoBehaviour
         }
     }
 
+    // Step 1: Player selects item from Notebook (via Keys 1-9)
     public void PresentEvidence(EvidenceClue evidence)
     {
-        // FIX 2: Send text to the UI, not just Debug.Log
-        if (currentState == InvestigationState.FindingPhysics)
+        bool isCorrectItem = false;
+        
+        // Check if item is correct for current phase
+        if (currentState == InvestigationState.FindingPhysics && evidence == activePhysicsClue)
         {
-            if (evidence == activePhysicsClue)
-            {
-                if (MysteryUIManager.Instance != null)
-                    MysteryUIManager.Instance.ShowDialogue("Chief: 'Okay, the window wasn't forced... but maybe he panicked?'");
-                
-                currentState = InvestigationState.FindingTrace;
-            }
-            else
-            {
-                if (MysteryUIManager.Instance != null)
-                    MysteryUIManager.Instance.ShowDialogue("Chief: 'That proves nothing. Stop wasting my time.'");
-            }
+            isCorrectItem = true;
         }
-        else if (currentState == InvestigationState.FindingTrace)
+        else if (currentState == InvestigationState.FindingTrace && evidence == activeTraceClue)
         {
-            if (evidence == activeTraceClue)
-            {
-                if (MysteryUIManager.Instance != null)
-                    MysteryUIManager.Instance.ShowDialogue("Chief: 'Wait... incapacitated? Lock down the building!'");
-                
-                currentState = InvestigationState.CaseSolved;
-            }
-            else
-            {
-                if (MysteryUIManager.Instance != null)
-                    MysteryUIManager.Instance.ShowDialogue("Chief: 'He could have still jumped.'");
-            }
-        }
-    }
-    
-    // Debug keys for testing without clicking
-    void Update()
-    {
-        // Key 1: Present Physics Clue (Only if collected)
-        if (Input.GetKeyDown(KeyCode.Alpha1)) 
-        {
-            if (collectedEvidence.Contains(activePhysicsClue))
-            {
-                PresentEvidence(activePhysicsClue);
-            }
-            else
-            {
-                Debug.Log("DEBUG: You haven't found the Physics Clue (" + activePhysicsClue.clueName + ") yet!");
-            }
+            isCorrectItem = true;
         }
 
-        // Key 2: Present Trace Clue (Only if collected)
-        if (Input.GetKeyDown(KeyCode.Alpha2)) 
+        if (isCorrectItem)
         {
-            if (collectedEvidence.Contains(activeTraceClue))
+            //If correct item, show the Argument Choices!
+            if (MysteryUIManager.Instance != null)
+                MysteryUIManager.Instance.ShowArgumentChoices(evidence);
+        }
+        else
+        {
+            // If wrong item, instant rejection (No choices)
+            if (MysteryUIManager.Instance != null)
+                MysteryUIManager.Instance.ShowDialogue($"Chief: \"A {evidence.clueName}? Irrelevant. That proves nothing.\"");
+        }
+    }
+
+    // Step 2: Player selects specific argument logic
+    public void ResolveArgument(EvidenceClue clue, int choiceIndex)
+    {
+        if (choiceIndex >= clue.arguments.Length) return;
+
+        ArgumentOption choice = clue.arguments[choiceIndex];
+
+        if (choice.isCorrectLogic)
+        {
+            // SUCCESS
+            if (currentState == InvestigationState.FindingPhysics)
             {
-                PresentEvidence(activeTraceClue);
+                MysteryUIManager.Instance.ShowDialogue(new string[] { 
+                    $"You: \"{choice.optionText}\"", 
+                    $"Chief: \"{choice.chiefResponse}\"",
+                    "Chief: \"Okay... so he didn't jump voluntarily. But maybe he panicked?\""
+                });
+                currentState = InvestigationState.FindingTrace;
             }
-            else
+            else if (currentState == InvestigationState.FindingTrace)
             {
-                Debug.Log("DEBUG: You haven't found the Trace Clue (" + activeTraceClue.clueName + ") yet!");
+                MysteryUIManager.Instance.ShowDialogue(new string[] { 
+                    $"You: \"{choice.optionText}\"", 
+                    $"Chief: \"{choice.chiefResponse}\"",
+                    "Chief: \"Wait... that means he was helpless. This was a murder. Lock down the building!\""
+                });
+                currentState = InvestigationState.CaseSolved;
+                StartCoroutine(WinGameSequence()); // <--- CALL WIN LOGIC
             }
+        }
+        else
+        {
+            // FAILURE (Right Clue, Wrong Argument)
+            MysteryUIManager.Instance.ShowDialogue(new string[] { 
+                $"You: \"{choice.optionText}\"", 
+                $"Chief: \"{choice.chiefResponse}\"",
+                "Chief: \"Try again when you have a real theory.\""
+            });
+        }
+    }
+
+    // --- NEW WIN LOGIC ---
+    IEnumerator WinGameSequence()
+    {
+        // 1. Wait for player to read the Chief's final line
+        yield return new WaitForSeconds(4f);
+
+        Debug.Log("--- CASE SOLVED! RETURNING TO HUB ---");
+
+        // 2. Call the Main Game Manager to handle rewards and scene switching
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnWorldCompleted();
+        }
+        else
+        {
+            Debug.LogError("No GameManager found! Cannot exit level.");
         }
     }
 }

@@ -24,6 +24,11 @@ public class RomanceWorldController : MonoBehaviour
 {
     public GameObject explorationHintPanel;
 
+    public void OnWorldTrigger(RomanceTriggerType triggerID) 
+    {
+        Debug.Log("Romance Trigger Activated: " + triggerID);
+    }
+    
     [Header("Spawn Points")]
     public Transform spawnDay1;
     public Transform spawnDay2;
@@ -112,7 +117,7 @@ public class RomanceWorldController : MonoBehaviour
         if (currentDay == RomanceDay.Day1_GildedEscape)
         {
             if (combatTitleText != null)
-                combatTitleText.text = "Day 1 — The Gilded Escape";
+                combatTitleText.text = "Day 1 ï¿½ The Gilded Escape";
 
             if (combatDescriptionText != null)
                 combatDescriptionText.text =
@@ -137,7 +142,7 @@ public class RomanceWorldController : MonoBehaviour
         // Apply favor changes
         ApplyCombatFavorChanges(optionIndex);
 
-        // Show a short “result scene” instead of jumping straight to group talk
+        // Show a short ï¿½result sceneï¿½ instead of jumping straight to group talk
         ShowCombatResult(optionIndex);
     }
 
@@ -153,17 +158,17 @@ public class RomanceWorldController : MonoBehaviour
         if (currentDay == RomanceDay.Day1_GildedEscape)
         {
             if (groupTitleText != null)
-                groupTitleText.text = "Campfire — After the Escape";
+                groupTitleText.text = "Campfire ï¿½ After the Escape";
 
             if (groupDescriptionText != null)
                 groupDescriptionText.text =
-                    "Now that you’re safely outside the walls, the group argues about whether leaving the capital like that was the right call.";
+                    "Now that youï¿½re safely outside the walls, the group argues about whether leaving the capital like that was the right call.";
 
             if (groupOption0Text != null)
                 groupOption0Text.text = "We had no choice. The King is trapped behind liars.";
 
             if (groupOption1Text != null)
-                groupOption1Text.text = "We should’ve stayed and rooted out the traitors from within.";
+                groupOption1Text.text = "We shouldï¿½ve stayed and rooted out the traitors from within.";
 
             if (groupOption2Text != null)
                 groupOption2Text.text = "We were never safe there. The whole system is rigged.";
@@ -241,7 +246,7 @@ public class RomanceWorldController : MonoBehaviour
         OnPersonalPhaseFinished();
     }
 
-    // Called after you’ve finished the personal talk for this day
+    // Called after youï¿½ve finished the personal talk for this day
     public void OnPersonalPhaseFinished()
     {
         Debug.Log($"[RomanceWorld] Personal phase finished for {currentDay}");
@@ -314,17 +319,17 @@ public class RomanceWorldController : MonoBehaviour
             switch (optionIndex)
             {
                 case 0:
-                    // “We had no choice. The King is trapped behind liars.”
+                    // ï¿½We had no choice. The King is trapped behind liars.ï¿½
                     favorManager.AddFavor(RomanceCharacter.Elara, +5);
                     favorManager.AddFavor(RomanceCharacter.Kael, -3);
                     break;
                 case 1:
-                    // “We should’ve stayed and rooted out the traitors from within.”
+                    // ï¿½We shouldï¿½ve stayed and rooted out the traitors from within.ï¿½
                     favorManager.AddFavor(RomanceCharacter.Kael, +5);
                     favorManager.AddFavor(RomanceCharacter.Nyx, -3);
                     break;
                 case 2:
-                    // “We were never safe there. The whole system is rigged.”
+                    // ï¿½We were never safe there. The whole system is rigged.ï¿½
                     favorManager.AddFavor(RomanceCharacter.Nyx, +5);
                     favorManager.AddFavor(RomanceCharacter.Elara, -3);
                     break;
@@ -391,7 +396,7 @@ public class RomanceWorldController : MonoBehaviour
                 "Princess Elara has uncovered a conspiracy: her own High Councilor " +
                 "is sabotaging every attempt at peace.\n\n" +
                 "With Kael and Nyx, she flees the palace under cover of night.\n" +
-                "Reach the city gate before it seals, or you’ll never make it to the Frozen Lake rendezvous.";
+                "Reach the city gate before it seals, or youï¿½ll never make it to the Frozen Lake rendezvous.";
         }
 
         Debug.Log("[RomanceWorld] Intro shown.");

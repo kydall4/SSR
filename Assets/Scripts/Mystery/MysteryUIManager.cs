@@ -31,6 +31,9 @@ public class MysteryUIManager : MonoBehaviour
     public Vector2 showPos = new Vector2(0, 0);
     public float slideSpeed = 5f;
 
+    [Header("Inspection UI")]
+    public Image inspectionImage; // <--- NEW: Drag your UI Image here
+
     // Helper to check if any UI is blocking the player
     private bool isNotebookOpen = false;
     private Queue<string> dialogueQueue = new Queue<string>();
@@ -235,6 +238,10 @@ public class MysteryUIManager : MonoBehaviour
     public void CloseDialogue()
     {
         dialoguePanel.SetActive(false);
+
+        // NEW: Hide the image when dialogue closes
+        if (inspectionImage != null) 
+            inspectionImage.gameObject.SetActive(false);
     }
 
     // --- NOTEBOOK SYSTEM ---
@@ -326,5 +333,27 @@ public class MysteryUIManager : MonoBehaviour
     void StartGameDialogue()
     {
         ShowDialogue("Chief: 'Look, the door was locked. He clearly jumped. I'm closing the case.'");
+    }
+
+    // --- NEW HELPER FUNCTION ---
+    public void ShowInspection(string text, Sprite image)
+    {
+        // 1. Show the Image (if one exists)
+        if (inspectionImage != null)
+        {
+            if (image != null)
+            {
+                inspectionImage.sprite = image;
+                inspectionImage.gameObject.SetActive(true);
+                inspectionImage.preserveAspect = true; // Keeps it from stretching
+            }
+            else
+            {
+                inspectionImage.gameObject.SetActive(false);
+            }
+        }
+
+        // 2. Show the Text
+        ShowDialogue(text);
     }
 }

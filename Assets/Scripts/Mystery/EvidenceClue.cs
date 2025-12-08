@@ -14,6 +14,9 @@ public class EvidenceClue : ScriptableObject
 {
     public string clueName;
     [TextArea] public string description;
+
+    public Sprite inspectImage; // Drag the 2D art here
+
     public bool isPhysicsLayer; // True = Physics, False = Trace
     public GameObject cluePrefab; 
 

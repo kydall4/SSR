@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf154f391358243eb8dc06b143492a94, type: 3}
+  m_Name: Clue_ShippingManifests
+  m_EditorClassIdentifier: Assembly-CSharp::EvidenceClue
+  clueName: Shipping Manifests
+  description: 'Manifest A (Official): "Item: Guidance Chip Batch #99. Destination:
+    Allied Base Alpha."
+
+    Manifest B (Black Book): "Item: Guidance Chip Batch
+    #99. Destination: [Redacted] Shell Corp -> Northern Separatist Front."
+
+    Handwritten
+    Margin Note (CFO): "The serial numbers match. Someone is selling the same stock
+    twice. One for us, one for them. If the guidance chips meet in the air, they
+    won''t detonate. It''s a fixed game."
+
+'
+  isPhysicsLayer: 0
+  cluePrefab: {fileID: 0}
+  arguments: []

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf154f391358243eb8dc06b143492a94, type: 3}
+  m_Name: Clue_HeiressLetter
+  m_EditorClassIdentifier: Assembly-CSharp::EvidenceClue
+  clueName: Immediate Suspension of Voting Proxy
+  description: 'New medical evidence regarding the current Acting CEO requires me
+    to revoke her Proxy Status immediately... Effective 2:30 PM today, voting control
+    will transfer to the next eligible biological heir: -'
+  isPhysicsLayer: 0
+  cluePrefab: {fileID: 0}
+  arguments: []

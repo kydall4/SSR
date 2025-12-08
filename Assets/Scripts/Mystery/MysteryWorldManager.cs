@@ -6,6 +6,10 @@ public class MysteryWorldManager : MonoBehaviour
 {
     public static MysteryWorldManager Instance;
 
+    [Header("--- Debug Settings ---")]
+    [Tooltip("Set to -1 for Random. Set to 0, 1, 2 etc to force a specific scenario.")]
+    public int forceScenarioIndex = -1; // <--- ADD THIS
+
     [Header("--- Data Pools ---")]
     public List<MysteryScenario> allScenarios;
     public List<EvidenceClue> physicsClues;
@@ -13,7 +17,8 @@ public class MysteryWorldManager : MonoBehaviour
 
     [Header("--- Spawn Points ---")]
     public Transform villainSpawnPoint;
-    public Transform flavorPropSpawnPoint;
+    // Order must match the 'All Scenarios' list (0=CEO, 1=Heiress, 2=General)
+    public List<Transform> flavorPropSpawnPoints;
     public Transform physicsClueSpawnPoint;
     public Transform traceClueSpawnPoint;
 
@@ -36,14 +41,46 @@ public class MysteryWorldManager : MonoBehaviour
         // 1. Pick Scenario (Villain)
         if (allScenarios.Count > 0)
         {
-            activeScenario = allScenarios[Random.Range(0, allScenarios.Count)];
+            int indexToUse = -1;
+            if (forceScenarioIndex >= 0 && forceScenarioIndex < allScenarios.Count)
+            {
+                indexToUse = forceScenarioIndex;
+                Debug.Log($"[Mystery] DEBUG: Forcing Scenario #{indexToUse}");
+            }
+            else
+            {
+                // If -1 (or invalid), pick Randomly
+                indexToUse = Random.Range(0, allScenarios.Count);
+            }
+
+            activeScenario = allScenarios[indexToUse];
             
-            if (activeScenario.villainModelPrefab != null)
-                Instantiate(activeScenario.villainModelPrefab, villainSpawnPoint.position, villainSpawnPoint.rotation);
+            //activeScenario = allScenarios[Random.Range(0, allScenarios.Count)];
+            
+            if (activeScenario.villainModelPrefab != null) {
+                // Spawn the generic card prefab
+                GameObject villainObj = Instantiate(activeScenario.villainModelPrefab, villainSpawnPoint.position, villainSpawnPoint.rotation);
+
+                // Find the SpriteRenderer and inject the specific scenario image
+                SpriteRenderer sr = villainObj.GetComponent<SpriteRenderer>();
+                if (sr != null && activeScenario.villainPortrait != null)
+                {
+                    sr.sprite = activeScenario.villainPortrait;
+                }
+            }
 
             if (activeScenario.flavorPropPrefab != null)
             {
-                GameObject newProp = Instantiate(activeScenario.flavorPropPrefab, flavorPropSpawnPoint.position, flavorPropSpawnPoint.rotation);
+                // Safety Check: Do we have a spawn point for this index?
+                Transform targetSpawn = (indexToUse < flavorPropSpawnPoints.Count) 
+                                        ? flavorPropSpawnPoints[indexToUse] 
+                                        : flavorPropSpawnPoints[0]; // Fallback
+                
+                GameObject newProp = Instantiate(
+                    activeScenario.flavorPropPrefab, 
+                    targetSpawn.position, 
+                    activeScenario.flavorPropPrefab.transform.rotation
+                );
                 
                 // Inject Data to the Prop
                 ClueObject logic = newProp.GetComponent<ClueObject>();
@@ -72,7 +109,12 @@ public class MysteryWorldManager : MonoBehaviour
             activeTraceClue = traceClues[Random.Range(0, traceClues.Count)];
             if (activeTraceClue.cluePrefab != null)
             {
-                GameObject newClue = Instantiate(activeTraceClue.cluePrefab, traceClueSpawnPoint.position, traceClueSpawnPoint.rotation);
+                GameObject newClue = Instantiate(
+                    activeTraceClue.cluePrefab, 
+                    traceClueSpawnPoint.position, 
+                    activeTraceClue.cluePrefab.transform.rotation
+                );
+                
                 ClueObject logic = newClue.GetComponent<ClueObject>();
                 if (logic != null) logic.clueData = activeTraceClue;
             }
@@ -92,8 +134,8 @@ public class MysteryWorldManager : MonoBehaviour
                 MysteryUIManager.Instance.RefreshContent(); 
 
                 // 2. SHOW THE THOUGHT (The Fix)
-                // We use the 'description' field from the data file
-                MysteryUIManager.Instance.ShowDialogue("Thinking: " + clue.description);
+                // Pass the description AND the image to the UI
+                MysteryUIManager.Instance.ShowInspection("Thinking: " + clue.description, clue.inspectImage);
             }
         }
     }

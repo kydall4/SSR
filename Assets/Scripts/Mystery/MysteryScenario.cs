@@ -5,6 +5,8 @@ public class MysteryScenario : ScriptableObject
 {
     public string villainName;
     public GameObject villainModelPrefab;
+
+    public Sprite villainPortrait;
     
     [Header("Flavor Prop")]
     public GameObject flavorPropPrefab;

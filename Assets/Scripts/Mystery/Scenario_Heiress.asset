@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe6c116faef0547918ccbc20b6ec864d, type: 3}
+  m_Name: Scenario_Heiress
+  m_EditorClassIdentifier: Assembly-CSharp::MysteryScenario
+  villainName: The Heiress
+  villainModelPrefab: {fileID: 6218148226588384597, guid: fe30f239c32de4173bf3d3ddfb7382fd, type: 3}
+  villainPortrait: {fileID: 21300000, guid: 57fa26e043d114076a8942b8210b1feb, type: 3}
+  flavorPropPrefab: {fileID: 139488304225139832, guid: 05a68a5d800064f59bd8cf510d26cce0, type: 3}
+  flavorPropData: {fileID: 11400000, guid: 01a7c5ca346bd4be48274a9ca3ae62c1, type: 2}
+  hiddenItemName: 
+  hiddenItemText: 
+  animationTriggerName: 

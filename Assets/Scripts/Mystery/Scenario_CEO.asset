@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6c116faef0547918ccbc20b6ec864d, type: 3}
   m_Name: Scenario_CEO
   m_EditorClassIdentifier: Assembly-CSharp::MysteryScenario
-  villainName: CEO
-  villainModelPrefab: {fileID: 6404810820318311154, guid: 1c29b145ed1254673a99a1423cc81b59, type: 3}
-  flavorPropPrefab: {fileID: 5307199541145807084, guid: c8d1379b2ded34d04ae9715aad14ac58, type: 3}
-  flavorPropData: {fileID: 11400000, guid: ce5f60ff3a1cb4ad4b66f62fd8a99da9, type: 2}
+  villainName: The CEO
+  villainModelPrefab: {fileID: 6218148226588384597, guid: fe30f239c32de4173bf3d3ddfb7382fd, type: 3}
+  villainPortrait: {fileID: 21300000, guid: b5ba0af33ed414f71b8b8875ec34d534, type: 3}
+  flavorPropPrefab: {fileID: 7002396335030643975, guid: 81c2b499a07254804ae2b35227a46f97, type: 3}
+  flavorPropData: {fileID: 11400000, guid: 58551940b5205475c804f587eee596a0, type: 2}
   hiddenItemName: Logistics Invoice #8944
   hiddenItemText: 'Header: Operation: Samaritan - Asset Swap
 

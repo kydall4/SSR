@@ -29,6 +29,6 @@ public class RomanceTrigger : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         used = true;
-        controller.OnWorldTrigger(triggerType);
+//        controller.OnWorldTrigger(triggerType);
     }
 }

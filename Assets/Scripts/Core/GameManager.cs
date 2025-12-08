@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public enum WorldType { None, RomanceCombat, Mystery, Combat, UltraRareHybrid }
 public enum WorldRarity { Common, Uncommon, Rare, SR, SSR }
 
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -20,6 +19,10 @@ public class GameManager : MonoBehaviour
     public WorldType currentWorld = WorldType.None;
     public WorldRarity currentWorldRarity = WorldRarity.Common;
     public string currentWorldSceneName = "";
+
+    // 🔹 DEMO FLAG: ensure the first normal pull is always Mystery
+    // This is private and only lives for this play session.
+    private bool hasForcedMysteryFirstPull = false;
 
     private void Awake()
     {
@@ -37,6 +40,20 @@ public class GameManager : MonoBehaviour
     {
         regularTickets--;
 
+        // 🔹 DEMO OVERRIDE:
+        // The first time we pull a normal world, always choose Mystery.
+        if (!hasForcedMysteryFirstPull)
+        {
+            hasForcedMysteryFirstPull = true;
+
+            currentWorld = WorldType.Mystery;
+            currentWorldSceneName = "MysteryWorld";
+            currentWorldRarity = WorldRarity.Rare; // keep your existing rarity behavior
+
+            return; // skip the random roll below for this first pull
+        }
+
+        // 🔹 Normal behavior for all subsequent pulls:
         int roll = Random.Range(0, 3);
         switch (roll)
         {
@@ -134,6 +151,4 @@ public class GameManager : MonoBehaviour
         SelectedCombatStyle = style;
         Debug.Log("[GameManager] Combat style set to: " + style);
     }
-
-
 }
